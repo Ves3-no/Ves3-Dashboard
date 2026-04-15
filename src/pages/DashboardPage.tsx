@@ -18,13 +18,15 @@ function DashboardPage({ setSite, userData, setUsername, username  }: { setSite:
                 </div>
                 <div id='DB-Right' >
                     <div id='DB-Right-Top'>
-                        <div id='DB-Right-Top-Left' className='section'></div>
+                        <div id='DB-Right-Top-Left' className='section Soon' >
+                            Comming soon
+                        </div>
                         <div id='DB-Right-Top-Right' className='section'>
                             <WeatherWindow UserCity={UserCity} userData={userData} />
                         </div>
                     </div>
-                    <div id='DB-Right-Bottom' className='section'>
-                        
+                    <div id='DB-Right-Bottom' className='section Soon'>
+                        Comming soon
                     </div>
                 </div>
             </div>
