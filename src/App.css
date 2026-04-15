@@ -240,7 +240,7 @@ button {
     flex: 1;
 }
 #DB-Right-Top-Left{
-    flex: 1;
+    flex: 2;
 }
 img {
     display: block;
@@ -334,6 +334,60 @@ img {
 .Chat-Message.user .Role{
     width: 98%;
     text-align: right;
+}
+/* WeatherWindow Styles */
+#WeatherInputHolder{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    flex-direction: column-reverse;
+}
+#WeatherInputHolder > input{
+    width: 200px;
+    height: 32.5px;
+    padding: 5px;
+    margin: 0;
+    text-align: center;
+}
+#Time{
+    font-family: 'Courier New', monospace;
+    font-weight: 900;
+    font-size: 2.4rem;
+    margin: 0;
+}
+#WeatherDisplay{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+#WeatherDisplayMain{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+}
+#WeatherDisplayMain > img{
+    width: 50px ;
+    height: 50px;
+    margin: 0;
+}
+#WeatherDisplayInfo{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: fit-content;
+    margin: 0 auto;
+    gap: 2px;
+    border-top: 1px solid black;
+    padding-top: 5px;
+}
+#WeatherDisplayInfo > p{
+    margin: 0;
+    font-style: italic;
+    color: #383838;
 }
 /* Phone styles */
 @media (max-width: 768px) {

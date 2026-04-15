@@ -1,10 +1,12 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import supabase from '../lib/supabase'
 import AiChat from '../components/AiChat'
 import logoutIcon from '../assets/logout-icon-lg.png'
+import WeatherWindow from '../components/WeatherWindow'
 function DashboardPage({ setSite, userData, setUsername, username  }: { setSite: any, userData: any, setUsername: any, username: any }) {
+    const [UserCity, setUserCity] = useState<any>()
     useEffect(() => {
-        getUser([setUsername, setSite, userData])
+        getUser([setUsername, setSite, userData, setUserCity])
     }, [])
     return (
         <div className="DashboardPage">
@@ -16,8 +18,10 @@ function DashboardPage({ setSite, userData, setUsername, username  }: { setSite:
                 </div>
                 <div id='DB-Right' >
                     <div id='DB-Right-Top'>
-                        <div id='DB-Right-Top-Right' className='section'></div>
                         <div id='DB-Right-Top-Left' className='section'></div>
+                        <div id='DB-Right-Top-Right' className='section'>
+                            <WeatherWindow UserCity={UserCity} userData={userData} />
+                        </div>
                     </div>
                     <div id='DB-Right-Bottom' className='section'>
                         
@@ -27,13 +31,13 @@ function DashboardPage({ setSite, userData, setUsername, username  }: { setSite:
         </div>
     )
 }
-async function getUser([setUsername, setSite, userData, ]: [any, any, any]) {
+async function getUser([setUsername, setSite, userData, setUserCity ]: [any, any, any, any]) {
     const User = userData
     console.log(userData)
     if (!User) return null
     const { data, error} = await supabase
         .from('users')
-        .select('username')
+        .select('username, city')
         .eq('id', User.user.id)
     if (error) {
         document.querySelector('.popup')!.innerHTML = `<p class="error">${error.message}</p>`
@@ -44,6 +48,7 @@ async function getUser([setUsername, setSite, userData, ]: [any, any, any]) {
         setSite('login')
     } else {
         setUsername(data[0].username)
+        setUserCity(data[0].city)
         return data[0]
     }
 

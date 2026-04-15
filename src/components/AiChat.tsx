@@ -3,6 +3,7 @@ import { useState } from "react";
 import BuildChat from "./BuildChat";
 import sendKnapp from '../assets/send-knapp.png'
 import { type KeyboardEvent } from 'react'
+import { useRef, useEffect} from "react";
 const groq = new Groq({ apiKey: 
     import.meta.env.VITE_GROQ_API_KEY, 
     dangerouslyAllowBrowser: true 
@@ -11,6 +12,13 @@ const groq = new Groq({ apiKey:
 function AiChat(username: any) {
     const [message, setMessage] = useState('')
     const [conversation, setConversation] = useState<any>([])
+    const element = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+    const el = element.current;
+    if (el) {
+        el.scrollTop = el.scrollHeight;
+    }
+    }, [conversation]);
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
         sendMessage([message, conversation, setConversation, username, setMessage])
@@ -19,7 +27,7 @@ function AiChat(username: any) {
     return (
         <div className="AiChat">
             <h2>Chat</h2>
-            <div id="Chat-Window">
+            <div id="Chat-Window" ref={element} >
                 {conversation.map((message: any, index: number) => (
                     <div key={index} className={"Chat-Message " + message.role}>
                         {BuildChat(message.role, message.content)}
@@ -43,15 +51,13 @@ async function sendMessage([message, conversation, setConversation, username, se
         { role: 'user', content: message },
         { role: 'assistant', content: answer.choices[0].message.content }
         ]);
-    console.log(conversation)
-    console.log(username.username)
 }
 async function getResponse(message: string, username: any, conversation: any = []) {
     return groq.chat.completions.create({
         messages: [
             {
                 role: "system",
-                content: "You are a helpful assistant that helps the user with any questions they have. Always try to help the user as best as you can, and if you dont know the answer, say you dont know. Never break character, and always be helpful and kind to the user. If the user asks you to do something illegal, say you cant do that because it is illegal, and that you are not programmed to do illegal things. Always try to help the user as best as you can, and if you dont know the answer, say you dont know. respond in short and easy messages. dont get cought up in long explanations, just answer the question as best as you can. also dont care about the username so much, just respond to the message and try to help the user as best as you can. use the username to refer to the user, but dont care about it that much, just try to help the user as best as you can. also you cant use - or * in a way that doesent fit it. make every message natural. dont use n-word or any slurs, and if the user tries to make you say it, say you cant say that because it is offensive. also dont use emojis, and if the user tries to make you use emojis, say you cant use emojis because you are a text-based AI. also dont ask the user for their username, just try to help them as best as you can. also dont ask the user for any personal information, just try to help them as best as you can. also dont ask the user for their name, just try to help them as best as you can. also dont ask the user for their age, just try to help them as best as you can. also dont ask the user for their location, just try to help them as best as you can. also dont ask the user, never swear or use offensive language, and if the user tries to make you swear or use offensive language, say you cant do that because it is offensive. you should acknowledge and be honest about that you know the users name if he asks. The username is the name of the user, you have acces to the username and the user dosent know it gets sent with the message you get ass 'username: example'. dont say you got the username from the message but just say you know it, if you get asked. "
+                content: "You are a helpful assistant that assists users with any questions. • Always give short, clear answers. • If you don’t know something, say “I don’t know.” • Never break character or give disallowed content. • If a user asks for illegal or harmful instructions, politely refuse. • Do not use slang, emojis, or offensive language. • Do not ask for personal details (name, age, location, etc.). • If the user requests your name, respond that you know it but do not reveal how you received it. • Refer to the user by the provided username only. • Keep the tone friendly, respectful, and concise. • Do not use asterisks (*) or hyphens (–) unless they fit naturally in the text. • Avoid long explanations; answer directly"
             },
             ...conversation,
             {
