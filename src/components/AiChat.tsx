@@ -1,7 +1,7 @@
 import Groq from "groq-sdk";
 import { useState } from "react";
 import BuildChat from "./BuildChat";
-import sendKnapp from '../assets/send-knapp.png'
+import sendKnapp from '../assets/Send-knapp.png'
 import { type KeyboardEvent } from 'react'
 import { useRef, useEffect} from "react";
 const groq = new Groq({ apiKey: 
