@@ -1,6 +1,6 @@
 import supabase from '../lib/supabase'
 import { useState } from 'react'
-
+import logo from "../assets/Ves3.eu med fjell og innsjø.png"
 function RegisterPage({ setSite, setUserData }: { setSite: any, setUserData: any }) {
     const [mail, setMail] = useState('')
     const [password, setPassword] = useState('')
@@ -8,7 +8,7 @@ function RegisterPage({ setSite, setUserData }: { setSite: any, setUserData: any
     return (
         <div className='Login-Register'>
             <div className="Form-Holder">
-            <h1><img src="/public/favicon.ico" alt="Logo" className='Logo'/>Register</h1>
+            <h1><img src={logo} alt="Logo" className='Logo'/>Register</h1>
             <div className="register-form form">
                 <label htmlFor="username">Username</label>
                 <input id="username" type="text" placeholder="Enter your username" onChange={(e) => setUsername(e.target.value)}/>

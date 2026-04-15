@@ -1,5 +1,6 @@
 import { useState } from "react"
 import supabase from "../lib/supabase"
+import logo from "../assets/Ves3.eu med fjell og innsjø.png"
 
 function LoginPage({ setSite, setUserData, username }: { setSite: any, setUserData: any, username: any }) {
     const [mail, setMail] = useState('')
@@ -7,7 +8,7 @@ function LoginPage({ setSite, setUserData, username }: { setSite: any, setUserDa
     return (
         <div className="Login-Register">
             <div className="Form-Holder">
-            <h1><img src="/public/favicon.ico" alt="Logo" className='Logo'/>Login</h1>
+            <h1><img src={logo} className='Logo'/>Login</h1>
             <div className="login-form form">
                 <label htmlFor="email">Mail</label>
                 <input id="email" type="email" placeholder="example@example.com" onChange={(e) => setMail(e.target.value)}/>
