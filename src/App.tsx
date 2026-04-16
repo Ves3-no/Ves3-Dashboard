@@ -53,7 +53,7 @@ function App() {
     >
     { site === 'dashboard' && !userData ? sites['login'] : sites[site] }  
     </motion.div>
-    <span id='Made-by'>Made by <a href="http://ves3.eu">Ves3</a></span>
+    <span id='Made-by'>Made by <a href="http://ves3.no">Ves3</a></span>
     </>)
   
 }

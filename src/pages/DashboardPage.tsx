@@ -1,14 +1,28 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import supabase from '../lib/supabase'
 import AiChat from '../components/AiChat'
 import logoutIcon from '../assets/logout-icon-lg.png'
 import WeatherWindow from '../components/WeatherWindow'
+import loadingImg from '../assets/load-icon-png-27.png'
 function DashboardPage({ setSite, userData, setUsername, username  }: { setSite: any, userData: any, setUsername: any, username: any }) {
     const [UserCity, setUserCity] = useState<any>()
+    const [isLoading, setIsLoading] = useState(true)
+    const loadingScreen = useRef<HTMLDivElement>(null);
     useEffect(() => {
         getUser([setUsername, setSite, userData, setUserCity])
     }, [])
+    useEffect(()=> {
+        const loading = loadingScreen.current
+        if(isLoading == true){
+            loading?.classList.add("active")
+        } else {
+            loading?.classList.remove("active")
+        }
+    }, [isLoading])
+    
     return (
+        <>
+        <div id='Loading' ref={loadingScreen}><img src={loadingImg} alt="Loading..." /></div>
         <div className="DashboardPage">
             <button id="logout-button" onClick={async () => await signOut(setSite)} className='Main'><img src={logoutIcon} alt="Logout"/></button>
             <div id="Dashboard-Content">
@@ -22,7 +36,7 @@ function DashboardPage({ setSite, userData, setUsername, username  }: { setSite:
                             Comming soon
                         </div>
                         <div id='DB-Right-Top-Right' className='section'>
-                            <WeatherWindow UserCity={UserCity} userData={userData} />
+                            <WeatherWindow UserCity={UserCity} userData={userData} setIsLoading={setIsLoading} />
                         </div>
                     </div>
                     <div id='DB-Right-Bottom' className='section Soon'>
@@ -31,7 +45,9 @@ function DashboardPage({ setSite, userData, setUsername, username  }: { setSite:
                 </div>
             </div>
         </div>
+        </>
     )
+    
 }
 async function getUser([setUsername, setSite, userData, setUserCity ]: [any, any, any, any]) {
     const User = userData

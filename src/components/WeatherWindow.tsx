@@ -16,7 +16,7 @@ interface WeatherData {
 
 }
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY 
-function WeatherWindow({UserCity, userData}: {UserCity: any, userData: any}){
+function WeatherWindow({UserCity, userData, setIsLoading}: {UserCity: any, userData: any, setIsLoading:any}){
     const [City, setCity] = useState<any>()
     const [Weather, setWeather] = useState<WeatherData | null>(null)
     const [Time, setTime] = useState<any>()
@@ -29,7 +29,7 @@ function WeatherWindow({UserCity, userData}: {UserCity: any, userData: any}){
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             UptateUserCity(City, userData)
-            GetWeather(City, setWeather)
+            GetWeather(City, setWeather, setIsLoading)
         }
 
     }
@@ -37,7 +37,7 @@ function WeatherWindow({UserCity, userData}: {UserCity: any, userData: any}){
         function waitForElement(){
                 if(typeof UserCity !== "undefined"){
                     setCity(UserCity)
-                    setTimeout(()=> {GetWeather(UserCity, setWeather)}, 10)
+                    setTimeout(()=> {GetWeather(UserCity, setWeather, setIsLoading)}, 10)
                 }
                 else{
                     setTimeout(waitForElement, 250);
@@ -65,7 +65,7 @@ function WeatherWindow({UserCity, userData}: {UserCity: any, userData: any}){
         </>
     )
 }
-async function GetWeather(City: any, setWeather: any){
+async function GetWeather(City: any, setWeather: any, setIsLoading:any){
     const data = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${City}&appid=${API_KEY}&units=metric`
     )
@@ -79,6 +79,9 @@ async function GetWeather(City: any, setWeather: any){
     } else{
     const WeatherData = await data.json();
     setWeather(WeatherData)
+    setTimeout(() => {
+        setIsLoading(false)
+    }, 1500)
 
     }
 
