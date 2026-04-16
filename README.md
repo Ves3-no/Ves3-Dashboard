@@ -34,3 +34,6 @@ npm run dev
 - Supabase
 - Groq SDK
 - OpenWeather API
+
+## Run live at
+https://ves3.online/
