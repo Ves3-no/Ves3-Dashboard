@@ -75,6 +75,7 @@ async function GetWeather(City: any, setWeather: any, setIsLoading:any){
         document.querySelector('.popup')!.classList.add('active')
         setTimeout(() => {
             document.querySelector('.popup')!.classList.remove('active')
+            setIsLoading(false)
         }, 3000)
     } else{
     const WeatherData = await data.json();
