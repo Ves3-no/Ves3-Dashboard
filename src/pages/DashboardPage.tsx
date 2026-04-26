@@ -3,7 +3,8 @@ import supabase from '../lib/supabase'
 import AiChat from '../components/AiChat'
 import logoutIcon from '../assets/logout-icon-lg.png'
 import WeatherWindow from '../components/WeatherWindow'
-import loadingImg from '../assets/load-icon-png-27.png'
+import loadingImg from '../assets/146-loading.png'
+import Todo from '../components/Todos'
 function DashboardPage({ setSite, userData, setUsername, username  }: { setSite: any, userData: any, setUsername: any, username: any }) {
     const [UserCity, setUserCity] = useState<any>()
     const [isLoading, setIsLoading] = useState(true)
@@ -33,7 +34,7 @@ function DashboardPage({ setSite, userData, setUsername, username  }: { setSite:
                 <div id='DB-Right' >
                     <div id='DB-Right-Top'>
                         <div id='DB-Right-Top-Left' className='section Soon' >
-                            Comming soon
+                            <Todo userData={userData}/>
                         </div>
                         <div id='DB-Right-Top-Right' className='section'>
                             <WeatherWindow UserCity={UserCity} userData={userData} setIsLoading={setIsLoading} />
@@ -51,7 +52,6 @@ function DashboardPage({ setSite, userData, setUsername, username  }: { setSite:
 }
 async function getUser([setUsername, setSite, userData, setUserCity ]: [any, any, any, any]) {
     const User = userData
-    console.log(userData)
     if (!User) return null
     const { data, error} = await supabase
         .from('users')
