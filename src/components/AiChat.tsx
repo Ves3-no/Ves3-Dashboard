@@ -11,7 +11,7 @@ const groq = new Groq({ apiKey:
 
 function AiChat(username: any) {
     const [message, setMessage] = useState('')
-    const [conversation, setConversation] = useState<any>([])
+    const [conversation, setConversation] = useState<any>([{ role: 'assistant', content: "Hva kan jeg hjelpe deg med i dag?" }])
     const element = useRef<HTMLDivElement>(null);
     useEffect(() => {
     const el = element.current;

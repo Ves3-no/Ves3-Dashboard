@@ -1,6 +1,7 @@
 import supabase from '../lib/supabase'
-import { useEffect,  } from 'react'
+import { useEffect, useState,  } from 'react'
 function Build({ userData, todo, setTodo, filter }: {userData: any, todo: any, setTodo: any, filter:any}){
+    const [Notes, setNotes] = useState<any>()
     useEffect(() =>{
         if (userData) {
         getTodos(userData, setTodo)
@@ -13,11 +14,20 @@ function Build({ userData, todo, setTodo, filter }: {userData: any, todo: any, s
         key={item?.id}
         style={{ display: filter === item?.status ? "flex" : filter === "All" ? "flex": "none" }}
         >
-            <p onClick={() => changeStatus(item, setTodo , item.id, todo)} className='Status'>{item.status}</p>
+            <p onClick={() => changeStatus(item, setTodo , item.id, todo)} className='Status' data-status={item.status}>{item.status}</p>
             <div className='TodoCardUnder'>
-                <input className='Name' value={item.name} defaultValue={undefined} size={Number(item.name.length)-2} onChange={(e)=> {ChangeName(e.target.value, setTodo , item.id, todo)}}/>
+                <input className='Name' value={item.name} defaultValue={undefined}  onChange={(e)=> {ChangeName(e.target.value, setTodo , item.id, todo)}}/>
+                <button onClick={()=> toggleNote(Notes, setNotes, item.id)} className='NotesToggle'>Take notes</button>
+                <button onClick={() => DeleteTodo(item, userData, setTodo)} className='DeleteBTN'>Slett</button>
+            </div>
+            <div className='TodoCardHidden' 
+            style={{
+                    opacity: !Notes ? 0  : Notes == item.id? 1 : 0,
+                    marginTop: !Notes ? "-45px" : Notes == item.id? "10px" : "-45px",
+                    zIndex: !Notes ? -10 : Notes == item.id? 1 : -10
+                }}
+            >
                 <textarea className='Content' value={item.content} defaultValue={undefined} onChange={(e)=> {ChangeContent(e.target.value, setTodo , item.id, todo)}}> </textarea>
-                <button onClick={() => DeleteTodo(item)} className='DeleteBTN'>Burn</button>
             </div>
         </div>
     ))} </>)
@@ -37,6 +47,13 @@ async function getTodos(userData: any, setTodo:any){
         setTimeout(() => {
             document.querySelector('.popup')!.classList.remove('active')
         }, 3000)
+    }
+}
+function toggleNote(Notes: any, setNotes: any, id: any) {
+    if (Notes === id) {
+        setNotes(null)
+    } else {
+        setNotes(id)
     }
 }
 async function changeStatus(item:any, setTodo: any, id:any, todo:any){
@@ -107,16 +124,19 @@ async function ChangeContent(Value:any, setTodo: any, id:any, todo:any){
     })
     setTodo(ny)
 }
-async function DeleteTodo(item:any) {
+async function DeleteTodo(item:any, userData: any, setTodo:any) {
     const {error} = await supabase
         .from('Todo')
         .delete()
         .eq('id', item.id)
+    if(error){
         document.querySelector('.popup')!.innerHTML = `<p class="error">${error?.message}!</p>`
         document.querySelector('.popup')!.classList.add('active')
         setTimeout(() => {
             document.querySelector('.popup')!.classList.remove('active')
         }, 3000)
+    }
+    getTodos(userData, setTodo)
 }
 export default Build
 export { getTodos }

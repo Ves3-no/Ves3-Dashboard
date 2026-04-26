@@ -10,7 +10,7 @@ function Todo({ userData }: any){
     return(
         <>
             <div id='InputErea'>
-                <input type="text" value={Name} onChange={(e)=> setName(e.target.value)} id='TodoInput' name='Input'/>
+                <input type="text" value={Name} onChange={(e)=> setName(e.target.value)} id='TodoInput' name='Input' placeholder='Hva står på agendaen?'/>
                 <button onClick={()=> MakeTodo(Name, userData, setTodo, setName)} id='TodoButton'><img src={send}></img></button>
                 <select name="Sort" id="SortTodos" defaultValue={"All"} onChange={(e)=>{HandleSort(e.target.value, setFilter)}}>
                     <option value="All" >All</option>

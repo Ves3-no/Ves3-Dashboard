@@ -51,6 +51,7 @@ function WeatherWindow({UserCity, userData, setIsLoading}: {UserCity: any, userD
             <div id="WeatherInputHolder"> 
                 <input type="text" onKeyDown={handleKeyDown} onChange={(e)=>{setCity(e.target.value)}} value={City}/>
                 <p id="Time">{Time?.toLocaleTimeString()}</p>
+                <p id="WeekNumber">Uke {getWeekNumber()}</p>
             </div>
             <div id="WeatherDisplay">
                 <div id="WeatherDisplayMain"> 
@@ -88,6 +89,14 @@ async function GetWeather(City: any, setWeather: any, setIsLoading:any){
 
 
 }
+function getWeekNumber() {
+    const date = new Date()
+    const thursday = new Date(date)
+    thursday.setDate(date.getDate() - (date.getDay() + 6) % 7 + 3)
+    const firstThursday = new Date(thursday.getFullYear(), 0, 4)
+    firstThursday.setDate(firstThursday.getDate() - (firstThursday.getDay() + 6) % 7 + 3)
+    return Math.round((thursday.getTime() - firstThursday.getTime()) / 604800000) + 1
+}
 async function UptateUserCity(City: any, userData: any){
     const { error } = await supabase
         .from('users')
@@ -102,4 +111,5 @@ async function UptateUserCity(City: any, userData: any){
         }, 3000)
     } 
 }   
+
 export default WeatherWindow

@@ -41,7 +41,7 @@ function DashboardPage({ setSite, userData, setUsername, username  }: { setSite:
                         </div>
                     </div>
                     <div id='DB-Right-Bottom' className='section Soon'>
-                        Comming soon
+                        Coming soon
                     </div>
                 </div>
             </div>

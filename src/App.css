@@ -123,6 +123,9 @@ body {
     width: 30px;
     height: 30px;
 }
+#root, body, html{
+    overflow: hidden;
+}
 /* Button styles */
 button {
     font-family: "Source Serif Pro", serif;
@@ -162,6 +165,9 @@ button {
 .No-Button:hover {
     text-decoration: underline;
     color: #9e4444;
+}
+textarea{
+    font-family: "Source Serif Pro", serif;
 }
 /* Popup styles */
 .popup {
@@ -203,6 +209,7 @@ button {
     margin: 0 auto;
     color: black;
     transform: translateY(-2%);
+    overflow: hidden;
 
 }
 .DashboardPage{
@@ -213,6 +220,7 @@ button {
     height: 100vh;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 #DB-Right{
     display: flex;
@@ -230,7 +238,7 @@ button {
 #DB-Right-Top{
     display: flex;
     gap: 20px;
-    flex: 4;
+    flex: 4.4;
     width: 100%;
 }
 #DB-Right-Bottom{
@@ -338,7 +346,6 @@ img {
 /* WeatherWindow Styles */
 #WeatherInputHolder{
     display: flex;
-    align-items: center;
     justify-content: center;
     gap: 20px;
     margin-top: 20px;
@@ -350,12 +357,14 @@ img {
     padding: 5px;
     margin: 0;
     text-align: center;
+    margin: 0 auto;
 }
 #Time{
     font-family: 'Courier New', monospace;
     font-weight: 900;
     font-size: 2.4rem;
     margin: 0;
+    margin: 0 auto;
 }
 #WeatherDisplay{
     display: flex;
@@ -388,6 +397,13 @@ img {
     margin: 0;
     font-style: italic;
     color: #383838;
+}
+#WeekNumber{
+    margin: 0px;
+    font-style: italic;
+    color: #383838;
+    margin: 0 auto;
+    margin-bottom: -15px;
 }
 /* Loading screen */
 #Loading.active{
@@ -430,6 +446,8 @@ img {
 #DB-Right-Top-Left{
     flex-direction: column;
     display: block;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 #TodoInput{
     padding: 10px;
@@ -442,6 +460,8 @@ img {
 #TodoButton{
     width: auto;
     height: auto;
+    background-color: #B95353;
+    transition: all 0.3s ease-in-out;
 }
 #TodoButton > img{
     width: auto;
@@ -464,8 +484,9 @@ img {
     flex-wrap: wrap;
     gap: 10px;
     overflow-y: scroll;
-    height: 72%;
-    max-height: 24vh;
+    height: 78%;
+    max-height: 23vh;
+    
 }
 #TodoCards::-webkit-scrollbar {
     width: 6px;
@@ -482,7 +503,6 @@ img {
 }
 .TodoCard{
     background-color: #BEBEBE;
-    width: 80%;
     max-width: 450px;
     display: flex;
     flex-direction: column;
@@ -490,36 +510,38 @@ img {
     align-items: start;
     gap: 0;
     padding: 15px;
+    width: auto;
     border-radius: 20px;
+    min-height: 33%;
     height: fit-content;
+    transition: all 0.3s ease-in-out;
 }
 .Status{
     font-size: 14px;
     margin: 0;
-    color: #D9D9D9;
+    color: #B95353;
     text-shadow: none;
     padding: 3px;
-    border: #9e4444 2px solid;
+    border: #B95353 1px solid;
     border-radius: 30px;
-    background-color: #B95353;
+    background-color: transparent;
 }
 .Status:hover{
-    background-color: #9e4444;
-    border-color: #D9D9D9;
+    background-color: #B95353;
+    color: #D9D9D9;
     cursor: pointer;
 }
 .Name{
     background-color: transparent;
     border: none;
     resize: none;
-    height: fit-content;
-    width: auto;
-    height: fit-content ;
+    width: 50%;
     padding: 0;
     text-align: start;
     color: #B95353;
     font-size: 20px;
     font-weight: bolder;
+    flex: 1.5;
 }
 .Name:focus{
     border: none;
@@ -535,7 +557,12 @@ img {
     border: 1px solid transparent;
     resize: none;
     border-radius: 5px;
-    width: 50%;
+    width: 100%;
+}
+.TodoCardHidden{
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+    margin-top: 10px;
 }
 .Content:focus{
     outline: none;
@@ -546,17 +573,23 @@ img {
     margin: 0;
     display: flex;
     align-items: center;
-    justify-content: space-around;
     flex-direction: row;
     width: 100%;
+    justify-content: space-between;
+    gap: 15px;
 }
 .DeleteBTN{
-    background-color: #9e4444;
+    background-color: #B95353;
     color: #D9D9D9;
     width: auto;
     padding: 10px;
     height: auto;
     font-size: 16px;
+    transition: 0.3s all ease-in-out;
+}
+.DeleteBTN:hover{
+    background-color: #9e4444;
+
 }
 #SortTodos{
     padding: 10px;
@@ -565,6 +598,7 @@ img {
     border-radius: 10px;
     color: #B95353;
     transition: all 0.3s ease-in-out;
+    cursor: pointer;
 }
 #SortTodos:focus{
     background-color: #B95353;
@@ -576,6 +610,24 @@ img {
     color: #D9D9D9;
     outline: none;
 }
+#TodoButton:hover{
+    background-color: #9e4444;
+}
+.NotesToggle{
+    font-size: 16px;
+    background-color: transparent;
+    border: 1px #B95353 solid;
+    color: #B95353;
+    transition: all 0.3s ease-in-out;
+    padding: 10px;
+    
+}
+.NotesToggle:hover{
+    background-color: #B95353;
+    color: #D9D9D9;
+
+}
+
 /* Phone styles */
 @media (max-width: 768px) {
     .Login-Register > .Form-Holder > h1{
