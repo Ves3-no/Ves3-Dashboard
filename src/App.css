@@ -465,6 +465,7 @@ img {
     gap: 10px;
     overflow-y: scroll;
     height: 72%;
+    max-height: 24vh;
 }
 #TodoCards::-webkit-scrollbar {
     width: 6px;
@@ -482,7 +483,7 @@ img {
 .TodoCard{
     background-color: #BEBEBE;
     width: 80%;
-    max-width: 350px;
+    max-width: 450px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -556,6 +557,24 @@ img {
     padding: 10px;
     height: auto;
     font-size: 16px;
+}
+#SortTodos{
+    padding: 10px;
+    border: #B95353 2px solid;
+    background-color: #D9D9D9;
+    border-radius: 10px;
+    color: #B95353;
+    transition: all 0.3s ease-in-out;
+}
+#SortTodos:focus{
+    background-color: #B95353;
+    color: #D9D9D9;
+    outline: none;
+}
+#SortTodos:hover{
+    background-color: #B95353;
+    color: #D9D9D9;
+    outline: none;
 }
 /* Phone styles */
 @media (max-width: 768px) {
