@@ -179,7 +179,7 @@ textarea{
     padding: 10px 20px;
     border-radius: 2rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    z-index: 100000;
     color: #D9D9D9;
     opacity: 0;
     bottom: -20px;
@@ -669,4 +669,49 @@ img {
     font-size: 30px;
     text-shadow: 1px 1px 2px #B95353;
     color: #B95353;
+}
+/* Hidden alex */
+#Alex{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    gap: 40px;
+}
+#Alex > img{
+    width: 500px;
+    height: 500px;
+    border-radius: 30px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+#Alex > img:hover{
+    transition: all 0.3s ease-in-out;
+    animation: AlexHover 2s infinite;
+}
+@keyframes AlexHover{
+ from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+#Alex > h1{
+    font-size: 62px;
+    color: #D9D9D9;
+    text-shadow: 1px 1px 2px #D9D9D9;
+    margin: 0;
+}
+#Alex > button{
+    background-color: #B95353;
+    color: #D9D9D9;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 24px;
+    border: none;
+    transition: all 0.3s ease-in-out;
+}
+#Alex > button:hover{
+    background-color: #9e4444;
 }

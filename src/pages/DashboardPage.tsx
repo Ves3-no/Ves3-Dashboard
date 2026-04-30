@@ -10,8 +10,8 @@ function DashboardPage({ userData, setUsername, username , navigate}: { userData
     const [isLoading, setIsLoading] = useState(true)
     const loadingScreen = useRef<HTMLDivElement>(null);
     useEffect(() => {
-        getUser([setUsername, navigate, userData, setUserCity])
-    }, [])
+        getUser([setUsername, navigate, userData, setUserCity, setIsLoading])
+    }, [userData])
     useEffect(()=> {
         const loading = loadingScreen.current
         if(isLoading == true){
@@ -50,7 +50,7 @@ function DashboardPage({ userData, setUsername, username , navigate}: { userData
     )
     
 }
-async function getUser([setUsername, navigate, userData, setUserCity ]: [any, any, any, any]) {
+async function getUser([setUsername, navigate, userData, setUserCity, setIsLoading ]: [any, any, any, any, any]) {
     const User = userData
     if (!User) return null
     const { data, error} = await supabase
@@ -63,8 +63,10 @@ async function getUser([setUsername, navigate, userData, setUserCity ]: [any, an
         setTimeout(() => {
             document.querySelector('.popup')!.classList.remove('active')
         }, 3000)
+
         navigate('/login')
     } else {
+        setIsLoading(false)
         setUsername(data[0].username)
         setUserCity(data[0].city)
         return data[0]

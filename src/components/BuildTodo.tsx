@@ -16,7 +16,7 @@ function Build({ userData, todo, setTodo, filter, setIsLoading }: {userData: any
         >
             <p onClick={() => changeStatus(item, setTodo , item.id, todo)} className='Status' data-status={item.status}>{item.status}</p>
             <div className='TodoCardUnder'>
-                <input className='Name' value={item.name} defaultValue={undefined}  onChange={(e)=> {ChangeName(e.target.value, setTodo , item.id, todo)}}/>
+                <input className='Name' value={item.name} onChange={(e)=> {ChangeName(e.target.value, setTodo , item.id, todo)}}/>
                 <button onClick={()=> toggleNote(Notes, setNotes, item.id)} className='NotesToggle'>Take notes</button>
                 <button onClick={() => DeleteTodo(item, userData, setTodo, setIsLoading)} className='DeleteBTN'>Slett</button>
             </div>
@@ -27,7 +27,7 @@ function Build({ userData, todo, setTodo, filter, setIsLoading }: {userData: any
                     zIndex: !Notes ? -10 : Notes == item.id? 1 : -10
                 }}
             >
-                <textarea className='Content' value={item.content} defaultValue={undefined} onChange={(e)=> {ChangeContent(e.target.value, setTodo , item.id, todo)}}> </textarea>
+                <textarea className='Content' value={item.content} onChange={(e)=> {ChangeContent(e.target.value, setTodo , item.id, todo)}}> </textarea>
             </div>
         </div>
     ))} </>)
@@ -41,10 +41,8 @@ async function getTodos(userData: any, setTodo:any, setIsLoading:any){
         .order('id', { ascending: false })
     if(!error){
         setTodo(data)
-    setTimeout(() => {
-        setIsLoading(false)
-    }, 1500)
     } else{
+        setIsLoading(false)
         document.querySelector('.popup')!.innerHTML = `<p class="error">${error?.message}!</p>`
         document.querySelector('.popup')!.classList.add('active')
         setTimeout(() => {

@@ -1,10 +1,15 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import supabase from "../lib/supabase"
 import logo from "../assets/Ves3.eu med fjell og innsjø.png"
 
-function LoginPage({ setUserData, username, navigate }: { setUserData: any, username: any, navigate: any }) {
+function LoginPage({ setUserData, username, navigate, session }: { setUserData: any, username: any, navigate: any, session: any }) {
     const [mail, setMail] = useState('')
     const [password, setPassword] = useState('')
+    useEffect(() => {
+        if (session) {
+            navigate('/dashboard')
+        }
+    }, [session, navigate])
     return (
         <div className="Login-Register">
             <div className="Form-Holder">

@@ -5,16 +5,34 @@ import DashboardPage from './pages/DashboardPage'
 import { useEffect, useState } from 'react'
 import supabase from './lib/supabase'
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-function AppContent() {
-  const [userData, setUserData] = useState<any>()
-  const [username, setUsername] = useState<any>()
-  const navigate = useNavigate()
-  useEffect(() => {
+import Alex from './pages/Alex'
+function AppContent({ userData, username, setUserData, setUsername, session }: { userData: any, username: any, setUserData: any, setUsername: any, session: any }) {
+    const navigate = useNavigate()
+  return (
+    <>
+    <div className='popup'></div>
+      <Routes>
+        <Route path="/" element={<LoginPage setUserData={setUserData} username={username} navigate={navigate} session={session} />} />
+        <Route path="/login" element={<LoginPage setUserData={setUserData} username={username} navigate={navigate} session={session} />} />
+        <Route path="/register" element={<RegisterPage setUserData={setUserData}  navigate={navigate}/>} />
+        <Route path="/dashboard" element={<DashboardPage  userData={userData} setUsername={setUsername} username={username} navigate={navigate} />} />
+        <Route path="/alex" element={<Alex />} />
+      </Routes>
+    <span id='Made-by'>Made by <a href="http://ves3.no">Ves3</a></span>
+    </>
+    )
+  
+}
+function App() {
+    const [userData, setUserData] = useState<any>()
+    const [username, setUsername] = useState<any>()
+    const [session, setSession] = useState<any>()
+    useEffect(() => {
       async function checkAuth() {
       const {data, error} = await supabase.auth.getSession()
       if (data?.session) {
-        navigate('/dashboard')
         await getUser()
+        setSession(data.session)
       } else if (error) {
         document.querySelector('.popup')!.innerHTML = `<p class="error">${error.message}</p>`
         document.querySelector('.popup')!.classList.add('active')
@@ -33,30 +51,15 @@ function AppContent() {
         }, 3000)
         } else {
           setUserData(data)
+          console.log(data)
         }
     }
     checkAuth()
     
   }, [])
-  
-  return (
-    <>
-    <div className='popup'></div>
-      <Routes>
-        <Route path="/" element={<LoginPage setUserData={setUserData} username={username} navigate={navigate} />} />
-        <Route path="/login" element={<LoginPage setUserData={setUserData} username={username} navigate={navigate} />} />
-        <Route path="/register" element={<RegisterPage setUserData={setUserData}  navigate={navigate}/>} />
-        <Route path="/dashboard" element={<DashboardPage  userData={userData} setUsername={setUsername} username={username} navigate={navigate} />} />
-      </Routes>
-    <span id='Made-by'>Made by <a href="http://ves3.no">Ves3</a></span>
-    </>
-    )
-  
-}
-function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <AppContent userData={userData} username={username} setUserData={setUserData} setUsername={setUsername} session={session} />
     </BrowserRouter>
   )
 }

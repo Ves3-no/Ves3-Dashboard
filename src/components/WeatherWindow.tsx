@@ -80,13 +80,10 @@ async function GetWeather(City: any, setWeather: any, setIsLoading:any){
         }, 3000)
     } else{
     const WeatherData = await data.json();
+    setIsLoading(false)
     setWeather(WeatherData)
-    setTimeout(() => {
-        setIsLoading(false)
-    }, 1500)
 
     }
-
 
 }
 function getWeekNumber() {
