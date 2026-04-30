@@ -9,6 +9,11 @@ import Alex from './pages/Alex'
 import NotFound from './pages/404'
 function AppContent({ userData, username, setUserData, setUsername, session }: { userData: any, username: any, setUserData: any, setUsername: any, session: any }) {
     const navigate = useNavigate()
+    useEffect(() => {
+      if (!session) {
+        navigate('/login')
+      }
+    }, [session, navigate])
   return (
     <>
     <div className='popup'></div>
