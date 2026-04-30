@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import supabase from './lib/supabase'
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Alex from './pages/Alex'
+import NotFound from './pages/404'
 function AppContent({ userData, username, setUserData, setUsername, session }: { userData: any, username: any, setUserData: any, setUsername: any, session: any }) {
     const navigate = useNavigate()
   return (
@@ -17,6 +18,7 @@ function AppContent({ userData, username, setUserData, setUsername, session }: {
         <Route path="/register" element={<RegisterPage setUserData={setUserData}  navigate={navigate}/>} />
         <Route path="/dashboard" element={<DashboardPage  userData={userData} setUsername={setUsername} username={username} navigate={navigate} />} />
         <Route path="/alex" element={<Alex />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     <span id='Made-by'>Made by <a href="http://ves3.no">Ves3</a></span>
     </>

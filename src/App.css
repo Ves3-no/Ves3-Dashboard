@@ -715,3 +715,25 @@ img {
 #Alex > button:hover{
     background-color: #9e4444;
 }
+/* 404 */
+#NotFound{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    text-shadow: 1px 1px 2px #B95353;
+    flex-direction: column;
+    height: 45vh;
+    background-color: #D9D9D9;
+    width: 40%;
+    border-radius: 30px;
+    margin: 20vh auto;
+    color: #B95353;
+}
+#NotFound > button{
+    margin: 0;
+}
+#NotFound > h1{
+    margin: 0;
+}
