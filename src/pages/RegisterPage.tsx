@@ -1,7 +1,7 @@
 import supabase from '../lib/supabase'
 import { useState } from 'react'
 import logo from "../assets/Ves3.eu med fjell og innsjø.png"
-function RegisterPage({ setSite, setUserData }: { setSite: any, setUserData: any }) {
+function RegisterPage({ setUserData, navigate }: { setUserData: any, navigate: any }) {
     const [mail, setMail] = useState('')
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
@@ -17,15 +17,15 @@ function RegisterPage({ setSite, setUserData }: { setSite: any, setUserData: any
                 <label htmlFor="password">Password</label>
                 <input id="password" type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)}/>
                 <div className="Buttons">
-                    <button className="Main" onClick={() => handleRegister([mail, password, username, setUserData, setSite])}>Register</button>
-                    <button className="No-Button" onClick={() => setSite('login')}>Already have an account? Login</button>
+                    <button className="Main" onClick={() => handleRegister([mail, password, username, setUserData, navigate])}>Register</button>
+                    <button className="No-Button" onClick={() => navigate('/login')}>Already have an account? Login</button>
                 </div>
             </div>
             </div>
         </div>
     )
 }
-async function handleRegister([mail, password, username, setUserData, setSite]: [string, string, string, any, any]) {
+async function handleRegister([mail, password, username, setUserData, navigate]: [string, string, string, any, any]) {
     const { data, error } = await supabase.auth.signUp({
         email: mail,
         password: password,
@@ -46,7 +46,7 @@ async function handleRegister([mail, password, username, setUserData, setSite]: 
             document.querySelector('.popup')!.classList.remove('active')
         }, 3000)
         } else {
-            setSite('dashboard')
+            navigate('/dashboard')
             document.querySelector('.popup')!.innerHTML = `<p class="error">${username},Your account has been created successfully!</p>`
         document.querySelector('.popup')!.classList.add('active')
         document.querySelector('.popup')!.classList.add('Positive')

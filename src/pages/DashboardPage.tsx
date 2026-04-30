@@ -5,12 +5,12 @@ import logoutIcon from '../assets/logout-icon-lg.png'
 import WeatherWindow from '../components/WeatherWindow'
 import loadingImg from '../assets/146-loading.png'
 import Todo from '../components/Todos'
-function DashboardPage({ setSite, userData, setUsername, username  }: { setSite: any, userData: any, setUsername: any, username: any }) {
+function DashboardPage({ userData, setUsername, username , navigate}: { userData: any, setUsername: any, username: any, navigate: any }) {
     const [UserCity, setUserCity] = useState<any>()
     const [isLoading, setIsLoading] = useState(true)
     const loadingScreen = useRef<HTMLDivElement>(null);
     useEffect(() => {
-        getUser([setUsername, setSite, userData, setUserCity])
+        getUser([setUsername, navigate, userData, setUserCity])
     }, [])
     useEffect(()=> {
         const loading = loadingScreen.current
@@ -25,7 +25,7 @@ function DashboardPage({ setSite, userData, setUsername, username  }: { setSite:
         <>
         <div id='Loading' ref={loadingScreen}><img src={loadingImg} alt="Loading..." /></div>
         <div className="DashboardPage">
-            <button id="logout-button" onClick={async () => await signOut(setSite)} className='Main'><img src={logoutIcon} alt="Logout"/></button>
+            <button id="logout-button" onClick={async () => await signOut(navigate)} className='Main'><img src={logoutIcon} alt="Logout"/></button>
             <div id="Dashboard-Content">
                 <div id='DB-Left' className='section'>
                     <h1>God dag {username}</h1>
@@ -34,7 +34,7 @@ function DashboardPage({ setSite, userData, setUsername, username  }: { setSite:
                 <div id='DB-Right' >
                     <div id='DB-Right-Top'>
                         <div id='DB-Right-Top-Left' className='section Soon' >
-                            <Todo userData={userData}/>
+                            <Todo userData={userData} setIsLoading={setIsLoading}/>
                         </div>
                         <div id='DB-Right-Top-Right' className='section'>
                             <WeatherWindow UserCity={UserCity} userData={userData} setIsLoading={setIsLoading} />
@@ -50,7 +50,7 @@ function DashboardPage({ setSite, userData, setUsername, username  }: { setSite:
     )
     
 }
-async function getUser([setUsername, setSite, userData, setUserCity ]: [any, any, any, any]) {
+async function getUser([setUsername, navigate, userData, setUserCity ]: [any, any, any, any]) {
     const User = userData
     if (!User) return null
     const { data, error} = await supabase
@@ -63,7 +63,7 @@ async function getUser([setUsername, setSite, userData, setUserCity ]: [any, any
         setTimeout(() => {
             document.querySelector('.popup')!.classList.remove('active')
         }, 3000)
-        setSite('login')
+        navigate('/login')
     } else {
         setUsername(data[0].username)
         setUserCity(data[0].city)
@@ -71,7 +71,7 @@ async function getUser([setUsername, setSite, userData, setUserCity ]: [any, any
     }
 
 }
-async function signOut(setSite: any) {
+async function signOut(navigate: any) {
     const { error } = await supabase.auth.signOut()
     if (error) {
         document.querySelector('.popup')!.innerHTML = `<p class="error">${error.message}</p>`
@@ -80,7 +80,7 @@ async function signOut(setSite: any) {
             document.querySelector('.popup')!.classList.remove('active')
         }, 3000)
     } else {
-        setSite('login')
+        navigate('/login')
     }
 }
 

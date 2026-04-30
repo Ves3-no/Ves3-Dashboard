@@ -2,7 +2,7 @@ import { useState } from "react"
 import supabase from "../lib/supabase"
 import logo from "../assets/Ves3.eu med fjell og innsjø.png"
 
-function LoginPage({ setSite, setUserData, username }: { setSite: any, setUserData: any, username: any }) {
+function LoginPage({ setUserData, username, navigate }: { setUserData: any, username: any, navigate: any }) {
     const [mail, setMail] = useState('')
     const [password, setPassword] = useState('')
     return (
@@ -15,16 +15,16 @@ function LoginPage({ setSite, setUserData, username }: { setSite: any, setUserDa
                 <label htmlFor="password">Password</label>
                 <input id="password" type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)}/>
                 <div className="Buttons">
-                    <button className="Main" onClick={() => handleLogin([mail, password, setSite, setUserData, username])}>Login</button>
-                    <button className="Secondary" onClick={() => setSite('register')}>Dont have an account?</button>
-                    <button className="No-Button" onClick={() => setSite('register')}>Forgot Password?</button>
+                    <button className="Main" onClick={() => handleLogin([mail, password, navigate, setUserData, username])}>Login</button>
+                    <button className="Secondary" onClick={() => navigate('/register')}>Dont have an account?</button>
+                    <button className="No-Button" onClick={() => navigate('/register')}>Forgot Password?</button>
                 </div>
             </div>
             </div>
         </div>
     )
 }
-async function handleLogin([mail, password, setSite, setUserData, username]: [string, string, any, any, any]) {
+async function handleLogin([mail, password, navigate, setUserData, username]: [string, string, any, any, any]) {
     const { data, error } = await supabase.auth.signInWithPassword({
         email: mail,
         password: password,
@@ -37,7 +37,7 @@ async function handleLogin([mail, password, setSite, setUserData, username]: [st
         }, 3000)
     } else  {
         setUserData(data)
-        setSite('dashboard')
+        navigate('/dashboard')
         await username 
         document.querySelector('.popup')!.innerHTML = `<p class="error">Welcome, back ${username}!</p>`
         document.querySelector('.popup')!.classList.add('active')

@@ -4,16 +4,16 @@ import RegisterPage from './pages/RegisterPage'
 import DashboardPage from './pages/DashboardPage'
 import { useEffect, useState } from 'react'
 import supabase from './lib/supabase'
-import { motion } from "motion/react"
-function App() {
-  const [site, setSite] = useState<any>('login')
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+function AppContent() {
   const [userData, setUserData] = useState<any>()
   const [username, setUsername] = useState<any>()
+  const navigate = useNavigate()
   useEffect(() => {
       async function checkAuth() {
       const {data, error} = await supabase.auth.getSession()
       if (data?.session) {
-        setSite('dashboard')
+        navigate('/dashboard')
         await getUser()
       } else if (error) {
         document.querySelector('.popup')!.innerHTML = `<p class="error">${error.message}</p>`
@@ -39,23 +39,25 @@ function App() {
     
   }, [])
   
-  const sites: any = {
-    'login': <LoginPage setSite={setSite} setUserData={setUserData} username={username} />,
-    'register': <RegisterPage setSite={setSite} setUserData={setUserData} />,
-    'dashboard': <DashboardPage setSite={setSite} userData={userData} setUsername={setUsername} username={username} />
-  }
-  return (<>
+  return (
+    <>
     <div className='popup'></div>
-    <motion.div className="App"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 0.5 }}
-    >
-    { site === 'dashboard' && !userData ? sites['login'] : sites[site] }  
-    </motion.div>
+      <Routes>
+        <Route path="/" element={<LoginPage setUserData={setUserData} username={username} navigate={navigate} />} />
+        <Route path="/login" element={<LoginPage setUserData={setUserData} username={username} navigate={navigate} />} />
+        <Route path="/register" element={<RegisterPage setUserData={setUserData}  navigate={navigate}/>} />
+        <Route path="/dashboard" element={<DashboardPage  userData={userData} setUsername={setUsername} username={username} navigate={navigate} />} />
+      </Routes>
     <span id='Made-by'>Made by <a href="http://ves3.no">Ves3</a></span>
-    </>)
+    </>
+    )
   
 }
-
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  )
+}
 export default App
