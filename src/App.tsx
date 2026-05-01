@@ -7,10 +7,10 @@ import supabase from './lib/supabase'
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Alex from './pages/Alex'
 import NotFound from './pages/404'
-function AppContent({ userData, username, setUserData, setUsername, session }: { userData: any, username: any, setUserData: any, setUsername: any, session: any }) {
+function AppContent({ userData, username, setUserData, setUsername, session, setSession }: { userData: any, username: any, setUserData: any, setUsername: any, session: any, setSession: any }) {
     const navigate = useNavigate()
     useEffect(() => {
-      if (!session) {
+      if (!session && window.location.pathname === '/dashboard') {
         navigate('/login')
       }
     }, [session, navigate])
@@ -18,10 +18,10 @@ function AppContent({ userData, username, setUserData, setUsername, session }: {
     <>
     <div className='popup'></div>
       <Routes>
-        <Route path="/" element={<LoginPage setUserData={setUserData} username={username} navigate={navigate} session={session} />} />
-        <Route path="/login" element={<LoginPage setUserData={setUserData} username={username} navigate={navigate} session={session} />} />
-        <Route path="/register" element={<RegisterPage setUserData={setUserData}  navigate={navigate}/>} />
-        <Route path="/dashboard" element={<DashboardPage  userData={userData} setUsername={setUsername} username={username} navigate={navigate} />} />
+        <Route path="/" element={<LoginPage setUserData={setUserData} username={username} navigate={navigate} session={session} setSession={setSession} />} />
+        <Route path="/login" element={<LoginPage setUserData={setUserData} username={username} navigate={navigate} session={session} setSession={setSession} />} />
+        <Route path="/register" element={<RegisterPage setUserData={setUserData}  navigate={navigate} setSession={setSession} />} />
+        <Route path="/dashboard" element={<DashboardPage  userData={userData} setUsername={setUsername} username={username} navigate={navigate} setSession={setSession} />} />
         <Route path="/alex" element={<Alex />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -66,7 +66,7 @@ function App() {
   }, [])
   return (
     <BrowserRouter>
-      <AppContent userData={userData} username={username} setUserData={setUserData} setUsername={setUsername} session={session} />
+      <AppContent userData={userData} username={username} setUserData={setUserData} setUsername={setUsername} session={session} setSession={setSession} />
     </BrowserRouter>
   )
 }

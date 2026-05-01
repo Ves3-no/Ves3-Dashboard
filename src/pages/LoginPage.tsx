@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import supabase from "../lib/supabase"
 import logo from "../assets/Ves3.eu med fjell og innsjø.png"
 
-function LoginPage({ setUserData, username, navigate, session }: { setUserData: any, username: any, navigate: any, session: any }) {
+function LoginPage({ setUserData, username, navigate, session, setSession }: { setUserData: any, username: any, navigate: any, session: any, setSession: any }) {
     const [mail, setMail] = useState('')
     const [password, setPassword] = useState('')
     useEffect(() => {
@@ -10,6 +10,17 @@ function LoginPage({ setUserData, username, navigate, session }: { setUserData: 
             navigate('/dashboard')
         }
     }, [session, navigate])
+    useEffect(() => {
+        if (session) {
+                document.querySelector('.popup')!.innerHTML = `<p class="error">Welcome, back ${username}!</p>`
+            document.querySelector('.popup')!.classList.add('active')
+            document.querySelector('.popup')!.classList.add('Positive')
+            setTimeout(() => {
+                document.querySelector('.popup')!.classList.remove('active')
+                document.querySelector('.popup')!.classList.remove('Positive')
+            }, 3000)
+        }
+    }, [username])
     return (
         <div className="Login-Register">
             <div className="Form-Holder">
@@ -20,7 +31,7 @@ function LoginPage({ setUserData, username, navigate, session }: { setUserData: 
                 <label htmlFor="password">Password</label>
                 <input id="password" type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)}/>
                 <div className="Buttons">
-                    <button className="Main" onClick={() => handleLogin([mail, password, navigate, setUserData, username])}>Login</button>
+                    <button className="Main" onClick={() => handleLogin([mail, password, navigate, setUserData, setSession])}>Login</button>
                     <button className="Secondary" onClick={() => navigate('/register')}>Dont have an account?</button>
                     <button className="No-Button" onClick={() => navigate('/register')}>Forgot Password?</button>
                 </div>
@@ -29,7 +40,7 @@ function LoginPage({ setUserData, username, navigate, session }: { setUserData: 
         </div>
     )
 }
-async function handleLogin([mail, password, navigate, setUserData, username]: [string, string, any, any, any]) {
+async function handleLogin([mail, password, navigate, setUserData, setSession]: [string, string, any, any, any]) {
     const { data, error } = await supabase.auth.signInWithPassword({
         email: mail,
         password: password,
@@ -42,15 +53,9 @@ async function handleLogin([mail, password, navigate, setUserData, username]: [s
         }, 3000)
     } else  {
         setUserData(data)
+        setSession(data.session)
         navigate('/dashboard')
-        await username 
-        document.querySelector('.popup')!.innerHTML = `<p class="error">Welcome, back ${username}!</p>`
-        document.querySelector('.popup')!.classList.add('active')
-        document.querySelector('.popup')!.classList.add('Positive')
-        setTimeout(() => {
-            document.querySelector('.popup')!.classList.remove('active')
-            document.querySelector('.popup')!.classList.remove('Positive')
-        }, 3000)
+        
     }
 }
 export default LoginPage

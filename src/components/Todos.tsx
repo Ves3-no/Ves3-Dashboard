@@ -3,7 +3,7 @@ import supabase from '../lib/supabase'
 import { useState } from 'react'
 import send from '../assets/Plus-Symbol-PNG-Images-HD.png'
 import { getTodos } from './BuildTodo'
-function Todo({ userData, setIsLoading }: { userData: any, setIsLoading: any }){
+function Todo({ userData }: { userData: any}){
     const [todo, setTodo] = useState<any>([])
     const [Name, setName] = useState<string>("")
     const [filter, setFilter] = useState<any>("All")
@@ -11,7 +11,7 @@ function Todo({ userData, setIsLoading }: { userData: any, setIsLoading: any }){
         <>
             <div id='InputErea'>
                 <input type="text" value={Name} onChange={(e)=> setName(e.target.value)} id='TodoInput' name='Input' placeholder='Hva står på agendaen?'/>
-                <button onClick={()=> MakeTodo(Name, userData, setTodo, setName, setIsLoading)} id='TodoButton'><img src={send}></img></button>
+                <button onClick={()=> MakeTodo(Name, userData, setTodo, setName)} id='TodoButton'><img src={send}></img></button>
                 <select name="Sort" id="SortTodos" defaultValue={"All"} onChange={(e)=>{HandleSort(e.target.value, setFilter)}}>
                     <option value="All" >All</option>
                     <option value="Not Started">Not Started</option>
@@ -20,7 +20,7 @@ function Todo({ userData, setIsLoading }: { userData: any, setIsLoading: any }){
                 </select>
             </div>
             <div id='TodoCards'>
-                <Build userData={userData} todo={todo} setTodo={setTodo} filter={filter} setIsLoading={setIsLoading} />
+                <Build userData={userData} todo={todo} setTodo={setTodo} filter={filter}  />
             </div>
         </>
     )
@@ -28,7 +28,7 @@ function Todo({ userData, setIsLoading }: { userData: any, setIsLoading: any }){
 function HandleSort(value:any, setFilter:any ){
     setFilter(value)
 }
-async function MakeTodo(Name: string, userData: any, setTodo:any, setName:any, setIsLoading:any) {
+async function MakeTodo(Name: string, userData: any, setTodo:any, setName:any) {
     const User = userData
     setName("")
     const { error } = await supabase
@@ -42,6 +42,6 @@ async function MakeTodo(Name: string, userData: any, setTodo:any, setName:any, s
             }, 3000)
         }
     
-    await getTodos(userData, setTodo, setIsLoading)
+    await getTodos(userData, setTodo)
 }
 export default Todo

@@ -1,10 +1,10 @@
 import supabase from '../lib/supabase'
 import { useEffect, useState,  } from 'react'
-function Build({ userData, todo, setTodo, filter, setIsLoading }: {userData: any, todo: any, setTodo: any, filter:any, setIsLoading: any}){
+function Build({ userData, todo, setTodo, filter }: {userData: any, todo: any, setTodo: any, filter:any}){
     const [Notes, setNotes] = useState<any>()
     useEffect(() =>{
         if (userData) {
-        getTodos(userData, setTodo, setIsLoading)
+        getTodos(userData, setTodo)
         }
     }, [userData])
 
@@ -18,7 +18,7 @@ function Build({ userData, todo, setTodo, filter, setIsLoading }: {userData: any
             <div className='TodoCardUnder'>
                 <input className='Name' value={item.name} onChange={(e)=> {ChangeName(e.target.value, setTodo , item.id, todo)}}/>
                 <button onClick={()=> toggleNote(Notes, setNotes, item.id)} className='NotesToggle'>Take notes</button>
-                <button onClick={() => DeleteTodo(item, userData, setTodo, setIsLoading)} className='DeleteBTN'>Slett</button>
+                <button onClick={() => DeleteTodo(item, userData, setTodo)} className='DeleteBTN'>Slett</button>
             </div>
             <div className='TodoCardHidden' 
             style={{
@@ -32,7 +32,7 @@ function Build({ userData, todo, setTodo, filter, setIsLoading }: {userData: any
         </div>
     ))} </>)
 }
-async function getTodos(userData: any, setTodo:any, setIsLoading:any){
+async function getTodos(userData: any, setTodo:any){
     const User = userData
     const { data, error } = await supabase
         .from("Todo")
@@ -42,7 +42,6 @@ async function getTodos(userData: any, setTodo:any, setIsLoading:any){
     if(!error){
         setTodo(data)
     } else{
-        setIsLoading(false)
         document.querySelector('.popup')!.innerHTML = `<p class="error">${error?.message}!</p>`
         document.querySelector('.popup')!.classList.add('active')
         setTimeout(() => {
@@ -125,7 +124,7 @@ async function ChangeContent(Value:any, setTodo: any, id:any, todo:any){
     })
     setTodo(ny)
 }
-async function DeleteTodo(item:any, userData: any, setTodo:any, setIsLoading:any) {
+async function DeleteTodo(item:any, userData: any, setTodo:any) {
     const {error} = await supabase
         .from('Todo')
         .delete()
@@ -137,7 +136,7 @@ async function DeleteTodo(item:any, userData: any, setTodo:any, setIsLoading:any
             document.querySelector('.popup')!.classList.remove('active')
         }, 3000)
     }
-    getTodos(userData, setTodo, setIsLoading)
+    getTodos(userData, setTodo)
 }
 export default Build
 export { getTodos }

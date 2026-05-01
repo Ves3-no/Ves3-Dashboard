@@ -1,7 +1,7 @@
 import supabase from '../lib/supabase'
 import { useState } from 'react'
 import logo from "../assets/Ves3.eu med fjell og innsjø.png"
-function RegisterPage({ setUserData, navigate }: { setUserData: any, navigate: any }) {
+function RegisterPage({ setUserData, navigate, setSession }: { setUserData: any, navigate: any, setSession: any }) {
     const [mail, setMail] = useState('')
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
@@ -17,7 +17,7 @@ function RegisterPage({ setUserData, navigate }: { setUserData: any, navigate: a
                 <label htmlFor="password">Password</label>
                 <input id="password" type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)}/>
                 <div className="Buttons">
-                    <button className="Main" onClick={() => handleRegister([mail, password, username, setUserData, navigate])}>Register</button>
+                    <button className="Main" onClick={() => handleRegister([mail, password, username, setUserData, navigate, setSession])}>Register</button>
                     <button className="No-Button" onClick={() => navigate('/login')}>Already have an account? Login</button>
                 </div>
             </div>
@@ -25,7 +25,7 @@ function RegisterPage({ setUserData, navigate }: { setUserData: any, navigate: a
         </div>
     )
 }
-async function handleRegister([mail, password, username, setUserData, navigate]: [string, string, string, any, any]) {
+async function handleRegister([mail, password, username, setUserData, navigate, setSession]: [string, string, string, any, any, any]) {
     const { data, error } = await supabase.auth.signUp({
         email: mail,
         password: password,
@@ -46,6 +46,7 @@ async function handleRegister([mail, password, username, setUserData, navigate]:
             document.querySelector('.popup')!.classList.remove('active')
         }, 3000)
         } else {
+            setSession(data.session)
             navigate('/dashboard')
             document.querySelector('.popup')!.innerHTML = `<p class="error">${username},Your account has been created successfully!</p>`
         document.querySelector('.popup')!.classList.add('active')
