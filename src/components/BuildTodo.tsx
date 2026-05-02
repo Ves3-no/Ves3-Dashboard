@@ -1,5 +1,6 @@
 import supabase from '../lib/supabase'
 import { useEffect, useState,  } from 'react'
+
 function Build({ userData, todo, setTodo, filter }: {userData: any, todo: any, setTodo: any, filter:any}){
     const [Notes, setNotes] = useState<any>()
     useEffect(() =>{
@@ -85,6 +86,13 @@ async function changeStatus(item:any, setTodo: any, id:any, todo:any){
     setTodo(ny)
 }
 async function ChangeName(Value:any, setTodo: any, id:any, todo:any){
+        const ny = todo.map((item:any)=>{
+        if(item.id == id){
+            return{ ...item, name: Value }
+        }
+        return item
+    })
+    setTodo(ny)
         const {error} = await supabase
         .from('Todo')
         .update({ 'name': Value })
@@ -96,15 +104,16 @@ async function ChangeName(Value:any, setTodo: any, id:any, todo:any){
             document.querySelector('.popup')!.classList.remove('active')
         }, 3000)
     }
+
+}
+async function ChangeContent(Value:any, setTodo: any, id:any, todo:any){
     const ny = todo.map((item:any)=>{
         if(item.id == id){
-            return{ ...item, name: Value }
+            return{ ...item, content: Value }
         }
         return item
     })
     setTodo(ny)
-}
-async function ChangeContent(Value:any, setTodo: any, id:any, todo:any){
     const {error} = await supabase
         .from('Todo')
         .update({ 'content': Value })
@@ -116,13 +125,6 @@ async function ChangeContent(Value:any, setTodo: any, id:any, todo:any){
             document.querySelector('.popup')!.classList.remove('active')
         }, 3000)
     }
-    const ny = todo.map((item:any)=>{
-        if(item.id == id){
-            return{ ...item, content: Value }
-        }
-        return item
-    })
-    setTodo(ny)
 }
 async function DeleteTodo(item:any, userData: any, setTodo:any) {
     const {error} = await supabase

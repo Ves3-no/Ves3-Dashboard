@@ -5,6 +5,7 @@ import logoutIcon from '../assets/logout-icon-lg.png'
 import WeatherWindow from '../components/WeatherWindow'
 import loadingImg from '../assets/146-loading.png'
 import Todo from '../components/Todos'
+import Notes from '../components/Notes'
 function DashboardPage({ userData, setUsername, username , navigate, setSession}: { userData: any, setUsername: any, username: any, navigate: any, setSession: any }) {
     const [UserCity, setUserCity] = useState<any>()
     const [isLoading, setIsLoading] = useState(true)
@@ -33,15 +34,15 @@ function DashboardPage({ userData, setUsername, username , navigate, setSession}
                 </div>
                 <div id='DB-Right' >
                     <div id='DB-Right-Top'>
-                        <div id='DB-Right-Top-Left' className='section Soon' >
+                        <div id='DB-Right-Top-Left' className='section' >
                             <Todo userData={userData}/>
                         </div>
                         <div id='DB-Right-Top-Right' className='section'>
                             <WeatherWindow UserCity={UserCity} userData={userData} setIsLoading={setIsLoading} />
                         </div>
                     </div>
-                    <div id='DB-Right-Bottom' className='section Soon'>
-                        Coming soon
+                    <div id='DB-Right-Bottom' className='section'>
+                        <Notes userData={userData}/>
                     </div>
                 </div>
             </div>

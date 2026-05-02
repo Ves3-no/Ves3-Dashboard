@@ -627,7 +627,123 @@ img {
     color: #D9D9D9;
 
 }
+/* Notes Styling */
+#DB-Right-Bottom{
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+#NotesLeft{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #B95353;
+    align-items: center;
+}
+#NotesRight{
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+}
+.NoteTitle{
+    font-size: 2.5rem;
+    padding: 0;
+    margin: 0;
+    background-color: #D9D9D9;
+    border: none;
+    color: #B95353;
+    text-align: center;
+    border-bottom: 1px solid #D9D9D9;
+    transition: all 0.3s ease-in-out;
+    padding: 15px;
+    border-radius: 20px;
+    border: transparent 1px solid;
+    text-shadow: 1px 1px 2px #38383852;
+}
+.NoteTitle:hover, .NoteTitle:focus{
+    outline: none;
+    border: #B95353 1px solid;
+}
+.NoteContent{
+    height: 100%;
+    background-color: #D9D9D9;
+    color: #383838;
+    border: none;
+    padding: 10px;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    border: transparent 1px solid;
+    border-radius: 10px;
+    resize: none;
+}
+.NoteContent:focus, .NoteContent:hover{
+    outline: none;
+    background-color: #BEBEBE;
+}
 
+.NoteInList{
+    cursor: pointer;
+    background-color: transparent;
+    width: 88%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    transition: all 0.3s ease-in-out;
+    border-radius: 20px;
+    margin: 0 auto;
+}
+.NoteInList:hover{
+    background-color: #BEBEBE   ;
+
+    color: #B95353;
+}
+.NoteInListName{
+    font-size: 16px;
+    color: #B95353;
+    font-weight: bold;
+    margin: 0;
+}
+#NoteList{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+    overflow-y: scroll;
+    height: 100%;
+    border-top: 1px solid #B95353;
+    overflow-x: hidden;
+    padding-top: 5px;
+}
+#NoteList::-webkit-scrollbar {
+    width: 6px;
+}
+#NoteList::-webkit-scrollbar-track {
+    background: transparent;
+}
+#NoteList::-webkit-scrollbar-thumb {
+    background-color: #B95353;
+    border-radius: 10px;
+}
+.NewNote{
+    padding: 5px;
+    font-size: 20px;
+    margin: 10px;
+}
+
+.DeleteBTN2{
+    margin: 0;
+    font-size: 16px;
+    padding: 7px;
+}
+.DeleteBTN2 > img{
+    width: auto;
+    height: 20px;
+}
 /* Phone styles */
 @media (max-width: 768px) {
     .Login-Register > .Form-Holder > h1{
