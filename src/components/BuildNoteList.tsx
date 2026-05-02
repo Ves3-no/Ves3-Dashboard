@@ -2,7 +2,10 @@ import Delete from '../assets/3405244.png'
 function BuildNoteList({ Notes, newNote, deleteNote, openNote, currentNote, setCurrentNote, userData, setNotes }: {Notes: any, newNote: any, deleteNote: any, openNote: any, currentNote: any, setCurrentNote: any, userData: any, setNotes: any}) {
     return (
         <>
-        <button onClick={()=> newNote(Notes, setNotes, userData, setCurrentNote)} className="Main NewNote">New Note</button>
+        <div id='NotesHeader'>
+            <h1>Notes</h1>
+            <button onClick={()=> newNote(Notes, setNotes, userData, setCurrentNote)} className="Secondary NewNote">+ Ny</button>
+        </div>
         <ul id="NoteList">
             {Notes.length === 0 ? <p>Her var det tomt, prøv å lage ditt første notat!</p> : Notes.map((note: any) => {
                 return (
