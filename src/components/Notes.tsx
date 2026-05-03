@@ -6,7 +6,7 @@ function Notes ({ userData }: { userData: any}){
     const [currentNote, setCurrentNote] = useState<any>(null)
     useEffect(() => {
         if (userData) {
-            getNotes(userData, setNotes, setCurrentNote, Notes)
+            getNotes(userData, setNotes, setCurrentNote)
         }
     }, [userData])
     return(
@@ -26,7 +26,7 @@ function Notes ({ userData }: { userData: any}){
         </>
     )
 }
-async function getNotes(userData: any, setNotes: any, setCurrentNote: any, Notes: any) {
+async function getNotes(userData: any, setNotes: any, setCurrentNote: any) {
     const User = userData
     const { data, error } = await supabase
         .from("Notes")
@@ -35,7 +35,7 @@ async function getNotes(userData: any, setNotes: any, setCurrentNote: any, Notes
         .order('created_at', { ascending: true })
     if(!error){
         setNotes(data)
-        setCurrentNote(Notes[0])
+        setCurrentNote(data[0])
     } else{
         document.querySelector('.popup')!.innerHTML = `<p class="error">${error.message}</p>`
         document.querySelector('.popup')!.classList.add('active')
@@ -70,7 +70,7 @@ async function deleteNote(Notes: any, setNotes: any, id: any) {
     setNotes(ny)
 
 }
-async function newNote(Notes: any, setNotes: any, userData: any, setCurrentNote: any) {
+async function newNote(setNotes: any, userData: any, setCurrentNote: any) {
     const { error } = await supabase
         .from('Notes')
         .insert({ user: userData.user.id, Name: "Ny note", Content: "" })
@@ -81,7 +81,7 @@ async function newNote(Notes: any, setNotes: any, userData: any, setCurrentNote:
             document.querySelector('.popup')!.classList.remove('active')
         }, 3000)
     }
-    getNotes(userData, setNotes, setCurrentNote, Notes)
+    getNotes(userData, setNotes, setCurrentNote)
 }
 async function uptateNoteTitle(id: any, Notes: any, setNotes: any, value: any, currentNote: any, setCurrentNote: any) {
     const nya = { ...currentNote, Name: value }

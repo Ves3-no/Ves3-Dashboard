@@ -632,7 +632,6 @@ img {
     display: flex;
     flex-direction: row;
     margin: 0;
-    padding: 0;
     overflow: hidden;
 }
 #NotesLeft{
@@ -648,7 +647,9 @@ img {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px;
+    padding: 0;
+    margin-left: 25px;
+    margin-right: 10px;
 }
 .NoteTitle{
     font-size: 2.5rem;
@@ -667,7 +668,7 @@ img {
 }
 .NoteTitle:hover, .NoteTitle:focus{
     outline: none;
-    border: #B95353 1px solid;
+    border: transparent 1px solid;
 }
 .NoteContent{
     height: 100%;
@@ -699,6 +700,7 @@ img {
     border-left: 3px solid #B95353;
     margin: 0 auto;
     color: #B95353;
+    margin-bottom: 10px;
 }
 .NoteInList:hover{
     background-color: #c9c9c9   ;
@@ -707,7 +709,7 @@ img {
 .NoteInList.active{
     background-color: #B95353;
     color: #D9D9D9;
-    border-color: #BEBEBE;
+    border-color: #383838;
 }
 .NoteInList.active .NoteInListName {
   color: #D9D9D9;
@@ -716,6 +718,7 @@ img {
     font-size: 16px;    color: #B95353;    color: #B95353;
     font-weight: bold;
     margin: 0;
+
 }
 #NotesHeader{
     display: flex;
