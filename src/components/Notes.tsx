@@ -62,7 +62,7 @@ async function deleteNote(Notes: any, setNotes: any, id: any, setCurrentNote: an
         }, 3000)
     }
     const ny = Notes.filter((item: any) => item.id !== id);
-    if (Notes.filter((item: any) => item.id !== currentNote.id)) {
+    if (currentNote.id == (Notes.filter((item: any) => item.id === id))[0].id) {
         setCurrentNote(ny[0])
     } 
     setNotes(ny);
