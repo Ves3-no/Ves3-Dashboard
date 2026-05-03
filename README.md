@@ -29,7 +29,7 @@ npm run dev
 ```
 
 ### The looks of the site
-![Visual of the app](./src/assets/Skjermbilde%202026-05-03%20135231.png)
+![Visual of the app](./public/Skjermbilde%202026-05-03%20135231.png)
 
 
 ## Built With
