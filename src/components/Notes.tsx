@@ -32,7 +32,7 @@ async function getNotes(userData: any, setNotes: any, setCurrentNote: any) {
         .from("Notes")
         .select("*")
         .eq('user',  User.user.id)
-        .order('created_at', { ascending: true })
+        .order('created_at', { ascending: false })
     if(!error){
         setNotes(data)
         setCurrentNote(data[0])

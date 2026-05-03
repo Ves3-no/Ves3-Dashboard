@@ -4,7 +4,7 @@ function BuildNoteList({ Notes, newNote, deleteNote, openNote, currentNote, setC
         <>
         <div id='NotesHeader'>
             <h1>Notes</h1>
-            <button onClick={()=> newNote(Notes, setNotes, userData, setCurrentNote)} className="Secondary NewNote">+ Ny</button>
+            <button onClick={()=> newNote(setNotes, userData, setCurrentNote)} className="Secondary NewNote">+ Ny</button>
         </div>
         <ul id="NoteList">
             {Notes.length === 0 ? <p>Her var det tomt, prøv å lage ditt første notat!</p> : Notes.map((note: any) => {
