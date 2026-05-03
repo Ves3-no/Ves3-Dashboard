@@ -61,13 +61,8 @@ async function deleteNote(Notes: any, setNotes: any, id: any) {
             document.querySelector('.popup')!.classList.remove('active')
         }, 3000)
     }
-    const ny = Notes.map((item:any)=>{
-        if(item.id == id){
-            return{ }
-        }
-        return item
-    })
-    setNotes(ny)
+    const ny = Notes.filter((item: any) => item.id !== id);
+    setNotes(ny);
 
 }
 async function newNote(setNotes: any, userData: any, setCurrentNote: any) {
