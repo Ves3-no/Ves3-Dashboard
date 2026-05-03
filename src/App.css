@@ -694,6 +694,7 @@ img {
     width: 84%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 10px;
     padding: 12px 10px;
     transition: all 0.3s ease-in-out;
