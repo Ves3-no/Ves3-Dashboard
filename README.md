@@ -28,6 +28,10 @@ VITE_GROQ_API_KEY=your_groq_key
 npm run dev
 ```
 
+### The looks of the site
+![Visual of the app](./src/assets/Skjermbilde%202026-05-03%20135231.png)
+
+
 ## Built With
 - React + TypeScript
 - Vite
