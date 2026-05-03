@@ -49,7 +49,7 @@ async function openNote( id: any, Notes: any, setCurrentNote: any) {
     const Note = Notes.find((note: any) => note.id === id)
     setCurrentNote(Note)
 }
-async function deleteNote(Notes: any, setNotes: any, id: any) {
+async function deleteNote(Notes: any, setNotes: any, id: any, setCurrentNote: any, currentNote: any) {
     const response = await supabase
         .from('Notes')
         .delete()
@@ -62,7 +62,11 @@ async function deleteNote(Notes: any, setNotes: any, id: any) {
         }, 3000)
     }
     const ny = Notes.filter((item: any) => item.id !== id);
+    if (Notes.filter((item: any) => item.id !== currentNote.id)) {
+        setCurrentNote(ny[0])
+    } 
     setNotes(ny);
+
 
 }
 async function newNote(setNotes: any, userData: any, setCurrentNote: any) {

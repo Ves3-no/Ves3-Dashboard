@@ -11,7 +11,7 @@ function BuildNoteList({ Notes, newNote, deleteNote, openNote, currentNote, setC
                 return (
                     <li key={note.id} className={"NoteInList " + (currentNote && currentNote.id === note.id ? "active" : "")} onClick={() => openNote(note.id, Notes, setCurrentNote)}>
                         <p className="NoteInListName">{note.Name}</p>
-                        <button onClick={()=> deleteNote(Notes, setNotes, note.id)} className="DeleteBTN2 No-Button">
+                        <button onClick={()=> deleteNote(Notes, setNotes, note.id, setCurrentNote, currentNote)} className="DeleteBTN2 No-Button">
                             <img src={Delete} alt="Delete" />
                         </button>
                     </li>
