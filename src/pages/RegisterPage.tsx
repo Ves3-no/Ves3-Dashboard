@@ -1,6 +1,6 @@
 import supabase from '../lib/supabase'
 import { useState } from 'react'
-import logo from "../assets/Ves3.eu med fjell og innsjø.png"
+import logo from "../assets/VES3 (2).png"
 function RegisterPage({ setUserData, navigate, setSession }: { setUserData: any, navigate: any, setSession: any }) {
     const [mail, setMail] = useState('')
     const [password, setPassword] = useState('')

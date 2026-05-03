@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import supabase from "../lib/supabase"
-import logo from "../assets/Ves3.eu med fjell og innsjø.png"
+import logo from "../assets/VES3 (2).png"
 
 function LoginPage({ setUserData, username, navigate, session, setSession }: { setUserData: any, username: any, navigate: any, session: any, setSession: any }) {
     const [mail, setMail] = useState('')
